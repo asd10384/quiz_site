@@ -1,0 +1,47 @@
+{
+  "name": "quiz_site",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/app.js",
+  "scripts": {
+    "start": "node .",
+    "build": "ts-cleaner && tsc",
+    "dev:watch": "nodemon -e ts --exec 'ts-cleaner && tsc && node . || exit 1'",
+    "dev": "ts-cleaner && tsc && node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asd10384/quiz_site.git"
+  },
+  "author": "tkrmagid",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/asd10384/quiz_site/issues"
+  },
+  "homepage": "https://github.com/asd10384/quiz_site#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^16.11.2",
+    "@typescript-eslint/eslint-plugin": "^5.1.0",
+    "@typescript-eslint/parser": "^5.1.0",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.1",
+    "nodemon": "^2.0.14",
+    "ts-cleaner": "^1.0.5",
+    "ts-node": "^10.3.0",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.4.4"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "fs": "^0.0.1-security",
+    "http": "^0.0.1-security",
+    "https": "^1.0.0",
+    "path": "^0.12.7"
+  }
+}

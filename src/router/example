@@ -1,0 +1,17 @@
+import { Router as Router } from "express";
+import { inRouter } from "../interfaces/Router";
+import { router, go } from "../app";
+
+export default class SlashRouter implements inRouter {
+  /** URL */
+  url: string = '/example';
+  /** ROUTER */
+  router: Router = Router().get(this.url, async (req, res) => {
+    return go(req, res, {
+      index: 'example',
+      title: '예시',
+      url: 'example',
+      data: {}
+    });
+  });
+}
