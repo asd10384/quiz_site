@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <%- include('../../../src/modules/header.ejs') %>
+    <%- include('../../../src/modules/socket.ejs') %>
+    <script src="/file/function/joinroom.js"></script>
+    <script src="/file/function/createroom.js"></script>
+  </head>
+  <body>
+    <%- include('../../../src/modules/nav.ejs') %>
+    <div class="main">
+      <div class="container">
+        <div class="popup">
+          <div class="createroom">
+            <a class="X" href="#" onclick="popupclose('createroom')"><ion-icon name="close"></ion-icon></a>
+            <form method="post" action="/musicquiz/createroom">
+              <p>방 이름 :</p><input type="text" name="name" required autocomplete="off"/><br/>
+              <p>노래 종류 :</p><select name="type" required><br/>
+                <option value="K-POP" selected>K-POP</option>
+                <option value="POP">POP</option>
+              </select><br/>
+              <p>제한인원 :</p><input type="number" name="limit" autocomplete="off" value="4"/><br/>
+              <p>비밀방 :</p><input type="checkbox" name="pv" autocomplete="off"/><br/>
+              <p id="ppw" style="visibility: hidden;">비밀번호 :</p><input id="ipw" style="visibility: hidden;" type="text" name="pw" autocomplete="off"/><br/>
+              <button type="submit">방 만들기</button>
+            </form>
+          </div>
+        </div>
+        <button class="btn" type="button" onclick="popupopen('createroom');">방 만들기</button>
+      </div>
+      <div class="roomlist">
+        <!-- <a class="room" href="#" onclick="joinroom(this, false);">
+          <div class="line"></div>
+          <p class="id">356</p>
+          <p class="play"><ion-icon name="ellipse"></ion-icon></p>
+          <p class="name">방 이름</p>
+          <p class="type">K-POP</p>
+          <p class="member">3/6</p>
+          <p class="round">라운드 5</p>
+          <p class="lock"><ion-icon name="lock-open"></ion-icon></p>
+        </a> -->
+      </div>
+    </div>
+  </body>
+</html>

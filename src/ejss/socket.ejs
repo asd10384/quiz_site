@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <%- include('../../src/modules/header.ejs') %>
+    <%- include('../../src/modules/test_socket.ejs') %>
+  </head>
+  <body>
+    <%- include('../../src/modules/nav.ejs') %>
+    <div class="main">
+      <div class="container">
+        <form class="form" action="#">
+          <input type="text" id="message" autocomplete="off"/>
+          <button id="btn" class="btn" type="submit">전송</button>
+        </form>
+      </div>
+      <div class="log"></div>
+    </div>
+  </body>
+</html>

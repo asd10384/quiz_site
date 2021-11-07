@@ -1,0 +1,24 @@
+<script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+      $(function() {
+        let socket = io();
+        socket.emit('test_login', {
+          name: `<%- user.name %>`,
+          userid: `<%- user.id %>`
+        });
+        socket.on('test_login', (name) => {
+          $('.log').append(`<div class="text">${name}님 접속</div>`);
+        });
+        socket.on('test_chat', (data) => {
+          $('.log').append(`<div class="text">${data.from.name} : ${data.msg}</div>`);
+        });
+        $('form').submit((e) => {
+          e.preventDefault();
+          var $message = $('#message');
+          if ($message.val() && $message.val() !== '') {
+            socket.emit('test_chat', { name: '<%- user.name %>', msg: $message.val() });
+            $message.val('');
+          }
+        });
+      });
+    </script>

@@ -1,0 +1,17 @@
+<div class="topnav">
+      <div class="title">
+        <h1>QUIZ STIE</h1>
+        <h2>- <%- title %> -</h2>
+      </div>
+      <nav>
+        <a class="<%if(index === 'main'){%>active<%}%>" href="/">&emsp;홈&emsp;</a>
+        <a class="<%if(index === 'musicquiz'){%>active<%}%>" href="/musicquiz">음악 퀴즈</a>
+        <a class="<%if(index === 'oxquiz'){%>active<%}%>" href="/oxquiz">O/X 퀴즈</a>
+        <% if (login) { %>
+        <a class="<%if(index === 'logout'){%>active<%}%>" href="/logout">로그아웃</a>
+        <a class="right" href="/profile" style="margin-right: -5vh;"><img src="<%- user.picture %>"><p><%- user.name %></p></a>
+        <% } else { %>
+          <a class="right" href="/login"><p>로그인&emsp;</p></a>
+        <% } %>
+      </nav>
+    </div>

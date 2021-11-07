@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <%- include('../../src/modules/header.ejs') %>
+  </head>
+  <body>
+    <%- include('../../src/modules/nav.ejs') %>
+    <div class="main">
+      <% if (login && data.nickname) { %>
+        <form action="/login/nickname" method="post">
+          <p class="text">닉네임 설정</p><input class="box" type="text" name="name" required/><br>
+          <input class="btn" type="submit" value="닉네임 설정">
+        </form>
+        <button class="btn" type="button" onclick="location.href='/'"><p>닉네임 변경하지 않고 넘어가기</p></button>
+      <% } else { %>
+        <h3 style="margin: 0 0 0.5vh 0;">구글 로그인후 이용해주세요.</h3>
+        <button class="btn" type="button" onclick="google_login();"><img src="/file/src/images/google_oauth.png"><p class="google">구글 로그인</p></button>
+        <!-- <form action="/login" method="post">
+          <p class="text">아이디</p><input class="box" type="text" name="id" required/><br>
+          <p class="text">비밀번호</p><input class="box" type="password" name="pw" required/><br>
+          <input class="btn" type="submit" value="로그인">
+        </form> -->
+        <script>
+          function isMobile() {
+            let UserAgent = navigator.userAgent;
+            if (UserAgent.match(/iPhone|iPod|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i) != null || UserAgent.match(/LG|SAMSUNG|Samsung/) != null) {
+              return true;
+            } else {
+              return false;
+            }
+          }
+          function google_login() {
+            if (isMobile()) {
+              if (confirm('카카오톡 링크로 열면 구글 로그인을 사용할수 없습니다.\n만약 카카오톡앱으로 구글 로그인을 시도한다면\n오른쪽 아래 ...을 눌러 다른 브라우저로 열기를 누른뒤 사용해주세요.')) {
+                window.open('/auth/google','_self');
+              }
+            } else {
+              window.open('/auth/google','_self');
+            }
+          }
+        </script>
+      <% } %>
+    </div>
+  </body>
+</html>

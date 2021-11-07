@@ -1,0 +1,190 @@
+
+.btn {
+  font-size: 2.5vh;
+  margin: 0 0 2vh 0;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 0.3vh 0.6vh;
+}
+.btn:hover {
+  background-color: rgba(0, 0, 0, 0.25);
+  transition: var(--transition-background-color);
+}
+
+.popup .X {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 3vh;
+  right: -1.3vh;
+  color: red;
+  font-size: 4vh;
+}
+.popup .X:hover {
+  color: rgb(150, 0, 0);
+  transition: var(--transition-background-color);
+}
+
+.popup .createroom {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.3s;
+  transition: visibility 1s, opacity 0.3s;
+  text-align: left;
+  z-index: 100;
+  background-color: rgb(255, 255, 255);
+  border: 2px solid black;
+  border-radius: 15px;
+  box-shadow: 2px 2px 2px 2px gray;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  width: 60vh;
+  height: 40vh;
+}
+
+.popup .createroom form p:first-child {
+  margin-top: 4vh;
+}
+.popup .createroom form p {
+  display: inline-flex;
+  margin: 3vh 0 0 12.5vh;
+  font-size: 2vh;
+  font-weight: bold;
+}
+.popup .createroom form input {
+  text-align: center;
+  padding: 0.4vh 0.4vh;
+  margin-left: 1vh;
+  height: 2vh;
+  font-size: 2vh;
+}
+.popup .createroom form select {
+  text-align: center;
+  padding: 0.4vh 0.4vh;
+  margin-left: 1vh;
+  height: 4vh;
+  width: 20vh;
+  font-size: 2vh;
+}
+.popup .createroom form input[type=checkbox] {
+  transform: translate(0, 25%);
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 0.3vh 0.5vh;
+  width: 3vh;
+  height: 3vh;
+  cursor: pointer;
+}
+.popup .createroom form button {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  bottom: 0.2vh;
+  font-size: 2.25vh;
+  font-weight: bold;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 0.3vh 0.5vh;
+}
+.popup .createroom form button:hover {
+  background-color: rgba(0, 0, 0, 0.25);
+  transition: var(--transition-background-color);
+}
+
+.roomlist {
+  margin-left: -2%;
+  width: 95%;
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.roomlist .room {
+  color: black;
+  text-decoration: none;
+  background-color: rgb(150, 150, 150);
+  border-radius: 1vh;
+  border: 1.5px solid black;
+  box-shadow: 2px 2px 2px 2px gray;
+  display: block;
+  width: 35vh;
+  height: 12.5vh;
+  position: relative;
+  left: 4vh;
+  margin: 0vh 0vh 2vh 2vh;
+}
+.roomlist .room:hover {
+  background-color: rgba(150, 150, 150, 0.5);
+  transition: var(--transition-background-color);
+}
+.roomlist .room:hover .line {
+  background-color: rgb(130, 130, 130);
+  transition: var(--transition-background-color);
+}
+
+.roomlist .room p {
+  margin: 0 0;
+}
+
+.roomlist .room .line {
+  background-color: rgb(200, 200, 200);
+  border-radius: 15%;
+  position: absolute;
+  transform: translate(0%, -50%);
+  top: 50%;
+  left: 24%;
+  width: 0.25vh;
+  height: 10.5vh;
+}
+.roomlist .room .play {
+  position: absolute;
+  transform: translate(0%, -50%);
+  top: 1.75vh;
+  left: 0.75vh;
+  font-size: 2vh;
+}
+.roomlist .room .id {
+  position: absolute;
+  transform: translate(0%, -50%);
+  top: 6vh;
+  left: 1.5vh;
+  font-size: 3vh;
+  font-weight: bold;
+}
+.roomlist .room .member {
+  position: absolute;
+  transform: translate(0%, -50%);
+  top: 2.2vh;
+  left: 31.2vh;
+  font-size: 1.75vh;
+}
+.roomlist .room .name {
+  position: absolute;
+  transform: translate(0%, -50%);
+  top: 2.5vh;
+  left: 9.6vh;
+  font-size: 3vh;
+  font-weight: bold;
+}
+.roomlist .room .type {
+  position: absolute;
+  transform: translate(0%, -50%);
+  top: 6.65vh;
+  left: 10vh;
+  font-size: 2.3vh;
+}
+.roomlist .room .round {
+  position: absolute;
+  transform: translate(0%, -50%);
+  top: 10.5vh;
+  left: 10vh;
+  font-size: 1.3vh;
+}
+.roomlist .room .lock {
+  position: absolute;
+  transform: translate(0%, -50%);
+  top: 10vh;
+  left: 31vh;
+  font-size: 3vh;
+  font-weight: bold;
+}

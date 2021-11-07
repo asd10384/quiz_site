@@ -1,0 +1,15 @@
+<script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+      $(function() {
+        let socket = io();
+        socket.emit('login', {
+          name: `<%- user.name %>`,
+          userid: `<%- user.id %>`,
+          roomid: `<%- data.roomid %>`
+        });
+        socket.on('getroom', (room) => {
+          $('.roomlist').html(room.roomlist);
+        });
+        socket.emit('getroom');
+      });
+    </script>
