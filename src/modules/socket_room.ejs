@@ -1,0 +1,19 @@
+<script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+      $(function() {
+        let socket = io('/room');
+        socket.emit('login', {
+          name: `<%- user.name %>`,
+          userid: `<%- user.id %>`,
+          picture: `<%- user.picture %>`,
+          roomid: `<%- data.roomid %>`
+        });
+        socket.on('members', (members) => {
+          let membertext = '';
+          members.forEach((member) => {
+            membertext += `<div class="member" style="margin-bottom: 2vh;"><a class="id">ID: ${member.id}</a><br/><a class="name">NAME: ${member.name}</a><br/><a class="picture">PICTURE:</a><br/><img src="${member.picture}" style="height: 10vh;"/></div>`;
+          });
+          $('.members').html(membertext);
+        });
+      });
+    </script>

@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { inRouter } from "../interfaces/inRouter";
-import { go } from "../app";
-import { Profile } from "passport-google-oauth20";
+import { go, getgoogleuser } from "../app";
 
 export default class SlashRouter implements inRouter {
   /** GET */
@@ -20,8 +19,4 @@ export default class SlashRouter implements inRouter {
       });
     })
   ];
-}
-
-function getgoogleuser(user: any): Profile {
-  return user;
 }

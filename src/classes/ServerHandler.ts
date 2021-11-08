@@ -5,6 +5,7 @@ import { Request, Response, Router } from "express";
 import { config } from "dotenv";
 import MDB from '../databases/Mongodb';
 import * as User from '../databases/objs/User';
+import { Profile } from "passport-google-oauth20";
 
 config();
 
@@ -25,6 +26,7 @@ export default class ServerHandler {
   public ishttps: boolean;
   public routerlist: Router[];
   public go: (req: Request, res: Response, options: optionstype) => any;
+  public getgoogleuser: (user: any) => Profile;
   constructor () {
     this.isport = (process.env.ISPORT) ? (process.env.ISPORT === 'true') ? true : false : false;
     this.port = (process.env.PORT) ? Number(process.env.PORT) : 0;
@@ -52,7 +54,13 @@ export default class ServerHandler {
         //     location.href='/login';
         //   </script>
         // `);
-        if (options.loginback && !userDB) return res.redirect('/login');
+        if (options.loginback && !userDB) {
+          if (options && options.url) res.cookie('from', '/'+options.url, {
+            maxAge: 1000 * 60 * 30,
+            path: '/login'
+          });
+          return res.redirect(`/login${(options && options.url) ? `?from=/${options.url}` : ''}`);
+        }
       }
       return res.status((options.status) ? options.status : 200).render(options.index, {
         domain: this.domain,
@@ -67,6 +75,9 @@ export default class ServerHandler {
         url: (options.url) ? this.domain+'/'+options.url : this.domain,
         data: (options.data) ? options.data : {}
       });
+    }
+    this.getgoogleuser = (user: any): Profile => {
+      return user;
     }
   }
 }

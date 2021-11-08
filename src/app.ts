@@ -17,7 +17,7 @@ config();
 
 const app: express.Application = express();
 
-export const { routerlist, go, ishttps, domain, port } = new RouterHandler();
+export const { routerlist, go, getgoogleuser, ishttps, domain, port } = new RouterHandler();
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../src/ejss'));
@@ -83,6 +83,7 @@ if (ishttps) {
 
 /** socket 통신 */
 const io = new socketio.Server(server);
+const io_room = io.of('/room');
 
 /** MDB */
 var room = { roomlist: '' };
@@ -110,11 +111,11 @@ async function getroom() {
   io.emit('getroom', room);
 }
 
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
   var name: string;
   var userid: string;
   var roomid: string;
-  socket.on('login', (data) => {
+  socket.on('login', async (data) => {
     console.log(`client login: ${data.name}`);
     name = data.name;
     userid = data.userid;
@@ -133,7 +134,7 @@ io.on('connection', (socket) => {
     // 특정 클라이언트에게만 메시지를 전송한다
     // io.to(userid).emit('getroom', room);
   });
-  socket.on('forceDisconnect', () => {
+  socket.on('forceDisconnect', async () => {
     socket.disconnect();
   });
   socket.on('disconnect', async () => {
@@ -150,51 +151,47 @@ io.on('connection', (socket) => {
   });
 
   setInterval(async () => getroom(), 3000);
+});
 
-
-
-
-  /** test */
-  socket.on('test_login', (data) => {
-    console.log(`client login: {\n  name: ${data.name}\n  ID: ${data.userid}\n}`);
+io_room.on('connection', async (socket) => {
+  var name: string;
+  var userid: string;
+  var picture: string;
+  var roomid: string;
+  socket.on('login', async (data) => {
+    console.log(`room login: ${data.name}`);
     name = data.name;
     userid = data.userid;
-    io.emit('test_login', data.name);
+    picture = data.picture;
+    roomid = data.roomid;
+    if (data.roomid) {
+      let room = await MDB.module.musicquiz.findOne({ id: roomid });
+      if (room) {
+        room.member = room.member + 1;
+        room.members.push({ name: name, id: userid, picture: picture });
+        await room.save().catch(err => console.error(err));
+        socket.join(roomid);
+        io_room.to(roomid).emit('members', room.members);
+      }
+    }
   });
-  socket.on('test_chat', (data) => {
-    let msg = {
-      from: {
-        name: name,
-        userid: userid
-      },
-      msg: data.msg
-    };
-    // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다
-    // socket.broadcast.emit('test_chat', msg);
-
-    // 메시지를 전송한 클라이언트에게만 메시지를 전송한다
-    // socket.emit('test_chat', msg);
-
-    // 접속된 모든 클라이언트에게 메시지를 전송한다
-    io.emit('test_chat', msg);
-
-    // 특정 클라이언트에게만 메시지를 전송한다
-    // io.to(id).emit('s2c chat', data);
-  });
-  socket.on('test_forceDisconnect', () => {
-    socket.disconnect();
-  });
-  socket.on('test_disconnect', () => {
-    let msg = {
-      from: {
-        name: '<서버>',
-        userid: '00000000'
-      },
-      msg: `${name}님 연결 종료`
-    };
+  socket.on('disconnect', async () => {
     if (name) {
-      console.log(`client disconnect: ${name}`);
-      io.emit('test_chat', msg);
+      console.log(`room disconnect: ${name}`);
+    }
+    if (roomid !== '') {
+      let roomDB = await MDB.module.musicquiz.findOne({ id: roomid });
+      if (roomDB) {
+        socket.leave(roomid);
+        roomDB.member = roomDB.member - 1;
+        let memberlist: any[] = [];
+        roomDB.members.forEach((member) => {
+          if (member.id !== userid) memberlist.push(member);
+        });
+        roomDB.members = memberlist;
+        await roomDB.save().catch(err => console.error(err));
+        io_room.to(roomid).emit('members', roomDB.members);
+      }
     }
   });
 });

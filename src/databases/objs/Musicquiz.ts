@@ -8,6 +8,7 @@ export interface Type extends Document {
   type: string,
   limit: number,
   member: number,
+  members: { name: string, id: string, picture: string }[],
   musiccount: number,
   private: boolean,
   password: string
@@ -19,6 +20,7 @@ const Schemadata: Schema = new Schema({
   type: { type: String },
   limit: { type: Number },
   member: { type: Number },
+  members: { type: Array },
   musiccount: { type: Number },
   private: { type: Boolean },
   password: { type: String }

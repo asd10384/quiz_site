@@ -47,6 +47,7 @@ async function get_musicquiz(room: {
   type?: string,
   limit: number,
   member?: number,
+  members?: { name: string, id: string, picture: string }[],
   musiccount?: number,
   private: boolean,
   password?: string
@@ -61,6 +62,7 @@ async function get_musicquiz(room: {
       type: (room.name) ? room.name : 'K-POP',
       limit: room.limit,
       member: (room.member) ? room.member : 0,
+      members: (room.members) ? room.members : [],
       musiccount: (room.musiccount) ? room.musiccount : 10,
       private: room.private,
       password: (room.password) ? room.password : ''

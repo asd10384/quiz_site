@@ -24,7 +24,7 @@ export default class SlashRouter implements inRouter {
       if (room.check) {
         return go(req, res, {
           index: 'musicquiz/room',
-          title: '음악퀴즈',
+          title: `${roomid}번방`,
           url: `musicquiz/${roomid}`,
           islogin: true,
           loginback: true,
@@ -51,8 +51,6 @@ export default class SlashRouter implements inRouter {
               maxAge: 1000 * 60 * 60 * 12,
               signed: true
             });
-            room.member = room.member + 1;
-            room.save().catch(err => console.error(err));
             return res.redirect(`/musicquiz/${roomid}`);
           }
           return res.send(`<script>alert('비밀번호가 다릅니다.'); location.href='/musicquiz';</script>`);
@@ -64,8 +62,6 @@ export default class SlashRouter implements inRouter {
           maxAge: 1000 * 60 * 60 * 12,
           signed: true
         });
-        room.member = room.member + 1;
-        room.save().catch(err => console.error(err));
         return res.redirect(`/musicquiz/${roomid}`);
       }
       return res.send(`<script>location.href='/musicquiz';</script>`);
@@ -80,7 +76,6 @@ export default class SlashRouter implements inRouter {
         name: name,
         type: type,
         limit: (limit < 1) ? 1 : (limit > 10) ? 10 : limit,
-        member: 1,
         private: pv,
         password: (pv) ? pw : ''
       });
