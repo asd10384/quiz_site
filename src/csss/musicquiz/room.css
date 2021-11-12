@@ -1,0 +1,42 @@
+.top {
+  display: block;
+  background-color: aqua;
+  text-align: center;
+  height: 6vh;
+  width: 93%;
+  margin: 0 auto;
+}
+
+.top .id {
+  position: absolute;
+  transform: translate(0, -50%);
+  left: 7vh;
+  top: 24vh;
+  font-size: 2.5vh;
+  font-weight: bold;
+}
+.top .name {
+  position: absolute;
+  transform: translate(0, -50%);
+  left: 18vh;
+  top: 24vh;
+}
+.top .type {
+  position: absolute;
+  transform: translate(0, -50%);
+  left: 24vh;
+  top: 24vh;
+}
+.top .limit {
+  position: absolute;
+  transform: translate(0, -50%);
+  left: 30vh;
+  top: 24vh;
+}
+
+.top .musiccount {
+  position: absolute;
+  transform: translate(0, -50%);
+  left: 36vh;
+  top: 24vh;
+}

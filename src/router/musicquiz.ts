@@ -2,6 +2,7 @@ import { Router as Router } from "express";
 import { inRouter } from "../interfaces/inRouter";
 import { go } from "../app";
 import MDB from '../databases/Mongodb';
+import { Type as MQType } from '../databases/objs/Musicquiz';
 
 export default class SlashRouter implements inRouter {
   /** GET */
@@ -70,7 +71,7 @@ export default class SlashRouter implements inRouter {
       let { name, type, limit, pv, pw } = req.body;
       pv = (pv == 'on') ? true : false;
       let roomlist = await MDB.module.musicquiz.find();
-      let roomid = makeroomid(roomlist.length);
+      let roomid = await makeroomid(roomlist);
       let roomDB = await MDB.get.musicquiz({
         id: roomid,
         name: name,
@@ -94,8 +95,22 @@ export default class SlashRouter implements inRouter {
   ];
 }
 
-function makeroomid(number: number) {
-  number = number + 1;
+async function makeroomid(roomlist: MQType[]) {
+  let roomnumlist: string[] = [];
+  roomlist.forEach((roomDB) => { roomnumlist.push(roomDB.id) });
+  var output = makenumber();
+  while (true) {
+    if (roomnumlist.includes(output)) {
+      output = makenumber();
+    } else {
+      break;
+    }
+  }
+  return output;
+}
+
+function makenumber(): string {
+  let number: number = Math.floor(Math.random() * (999-1)+1);
   let output: string = number.toString();
   if (number < 100) {
     output = '0' + output;

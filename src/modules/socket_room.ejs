@@ -8,6 +8,16 @@
           picture: `<%- user.picture %>`,
           roomid: `<%- data.roomid %>`
         });
+        socket.on('room', (room) => {
+          if (room.id) {
+            for (let i in room) {
+              $(`.top .${i}`).html(room[i]);
+            }
+          } else {
+            alert(`방을 찾을수 없습니다.`);
+            location.href="/musicquiz";
+          }
+        });
         socket.on('members', (members) => {
           let membertext = '';
           members.forEach((member) => {
@@ -15,5 +25,6 @@
           });
           $('.members').html(membertext);
         });
+        socket.emit('room', { roomid: `<%- data.roomid %>` });
       });
     </script>

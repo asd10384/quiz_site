@@ -7,7 +7,7 @@ var room = { roomlist: '' };
 export async function getroom(io: socket_io.Server) {
   let roomlist = await MDB.module.musicquiz.find();
   room.roomlist = '';
-  roomlist.forEach(async (r, index) => {
+  roomlist.forEach(async (r) => {
     if (r.member <= 0) {
       await MDB.module.musicquiz.deleteOne({ id: r.id, name: r.name });
     } else {
@@ -44,11 +44,26 @@ export async function room_on(io_room: socket_io.Namespace) {
         let room = await MDB.module.musicquiz.findOne({ id: roomid });
         if (room) {
           room.member = room.member + 1;
+          if (!room.members) room.members = [];
           room.members.push({ name: name, id: userid, picture: picture });
           await room.save().catch(err => console.error(err));
           socket.join(roomid);
           io_room.to(roomid).emit('members', room.members);
         }
+      }
+    });
+    socket.on('room', async (data) => {
+      let roomDB = await MDB.module.musicquiz.findOne({ id: data.roomid });
+      if (roomDB) {
+        socket.emit('room', {
+          id: data.roomid,
+          name: roomDB.name,
+          limit: roomDB.limit,
+          type: roomDB.type,
+          musiccount: roomDB.musiccount
+        });
+      } else {
+        socket.emit('room', { id: undefined });
       }
     });
     socket.on('disconnect', async () => {

@@ -59,7 +59,7 @@ async function get_musicquiz(room: {
     let data = {
       id: room.id,
       name: room.name,
-      type: (room.name) ? room.name : 'K-POP',
+      type: (room.type) ? room.type : 'K-POP',
       limit: room.limit,
       member: (room.member) ? room.member : 0,
       members: (room.members) ? room.members : [],
